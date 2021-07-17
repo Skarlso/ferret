@@ -58,7 +58,6 @@ func LoadHTMLPage(
 	}
 
 	client := cdp.NewClient(conn)
-
 	if err := enableFeatures(ctx, client, params); err != nil {
 		return nil, err
 	}
@@ -89,11 +88,12 @@ func LoadHTMLPage(
 	}
 
 	if params.Ignore != nil && len(params.Ignore.Resources) > 0 {
-		netOpts.Filter.Patterns = params.Ignore.Resources
+		netOpts.Filter = &net.Filter{
+			Patterns: params.Ignore.Resources,
+		}
 	}
 
-	netManager, err := net.New(logger, client, netOpts)
-
+	netManager, err := net.New(ctx, logger, client, netOpts)
 	if err != nil {
 		return nil, err
 	}
@@ -107,12 +107,9 @@ func LoadHTMLPage(
 		mouse,
 		keyboard,
 	)
-
 	if err != nil {
 		return nil, err
 	}
-
-	closers = append(closers, domManager)
 
 	p = NewHTMLPage(
 		logger,
@@ -481,11 +478,11 @@ func (p *HTMLPage) CaptureScreenshot(ctx context.Context, params drivers.Screens
 	}
 
 	if params.Width <= 0 {
-		params.Width = values.Float(metrics.LayoutViewport.ClientWidth) - params.X
+		params.Width = values.Float(metrics.CSSLayoutViewport.ClientWidth) - params.X
 	}
 
 	if params.Height <= 0 {
-		params.Height = values.Float(metrics.LayoutViewport.ClientHeight) - params.Y
+		params.Height = values.Float(metrics.CSSLayoutViewport.ClientHeight) - params.Y
 	}
 
 	clip := page.Viewport{
