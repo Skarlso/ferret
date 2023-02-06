@@ -10,7 +10,7 @@ require (
 	github.com/corpix/uarand v0.1.1
 	github.com/gobwas/glob v0.2.3
 	github.com/gorilla/css v1.0.0
-	github.com/jarcoal/httpmock v1.2.0
+	github.com/jarcoal/httpmock v1.3.0
 	github.com/mafredri/cdp v0.33.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.28.0
@@ -35,5 +35,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/smartystreets/assertions v1.2.0 // indirect
 	github.com/stretchr/objx v0.4.0 // indirect
+	golang.org/x/sys v0.0.0-20220318055525-2edf467146b5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
